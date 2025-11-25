@@ -8,6 +8,8 @@ def quick_sort(arr: list[T], key: Callable[[T], Any] | None = None,
     """
     Быстрая сортировка
     :param arr: Список, который нужно отсортировать
+    :param key: Ключ, по которому будет происходить сортировка
+    :param cmp: Компаратор, котрый будет использован при сортировке
     :return: Возвращает отсортированный список
     """
     compare = build_compare(key, cmp)
@@ -31,4 +33,8 @@ def quick_sort(arr: list[T], key: Callable[[T], Any] | None = None,
         return i + 1
     
     _quicksort(0, len(arr) - 1)
+
     return arr
+
+"""a = [1, 58, 34, 102]
+print(quick_sort(a))"""

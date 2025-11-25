@@ -1,5 +1,5 @@
 from typing import TypeVar, Callable, Any
-from keys_comps import build_compare
+from src.sortings.keys_comps import build_compare
 
 T = TypeVar('T')
 
@@ -8,6 +8,8 @@ cmp: Callable[[T, T], int] | None = None) -> list[T]:
     """
     Сортировка пузырьком
     :param arr: Список, который нужно отсортировать
+    :param key: Ключ, по которому будет происходить сортировка
+    :param cmp: Компаратор, котрый будет использован при сортировке
     :return: Возвращает отсортированный список
     """
     compare = build_compare(key, cmp)
@@ -21,3 +23,5 @@ cmp: Callable[[T, T], int] | None = None) -> list[T]:
                 swapped = True
         if not swapped:
             break
+
+    return arr

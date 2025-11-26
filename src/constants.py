@@ -13,17 +13,18 @@ SORT_RE = re.compile(
     r'''
     \s*(?P<list>\[.*\])\s*
     (?:key=(?P<key>[^\s]+))?\s*
-    (?:cmp=(?P<cmp>[^\s]+))?
+    (?:cmp=(?P<cmp>[^\s]+))?\s*
+    (?:base=(?P<base>[^\s]+))?
     ''',
     re.VERBOSE,
 )
 
-"""com = '[1, 2, \'a,bc\']    key=BEST_KEY1'
+'''com = '[1, 2, \'a,bc\']    key=BEST_KEY1'
 print(SORT_RE.findall(com))
 mat = SORT_RE.match(com)
 print(mat.group('list'))
 print(mat.group('key'))
-print(mat.group('cmp'))"""
+print(mat.group('cmp'))'''
 
 """text = 'ф1, 2, 3, "ab c"'
 print(re.findall(LIST_RE, text))"""

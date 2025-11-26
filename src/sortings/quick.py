@@ -1,10 +1,11 @@
 from typing import TypeVar, Callable, Any
-from keys_comps import build_compare
+from src.sortings.keys_comps import build_compare
+from src.app_errors import AppError
 
 T = TypeVar('T')
 
-def quick_sort(arr: list[T], key: Callable[[T], Any] | None = None,
-              cmp: Callable[[T, T], int] | None = None) -> list[T]:
+def quick_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
+cmp: Callable[[T, T], int] | None = None) -> list[Any]:
     """
     Быстрая сортировка
     :param arr: Список, который нужно отсортировать
@@ -25,9 +26,12 @@ def quick_sort(arr: list[T], key: Callable[[T], Any] | None = None,
         i = low - 1
         
         for j in range(low, high):
-            if compare(arr[j], pivot) <= 0:
-                i += 1
-                arr[i], arr[j] = arr[j], arr[i]
+            try:
+                if compare(arr[j], pivot) <= 0:
+                    i += 1
+                    arr[i], arr[j] = arr[j], arr[i]
+            except Exception:
+                raise AppError(f'Нельзя сравнить элементы по указанным правилам: {arr[j]} и {pivot}')
         
         arr[i + 1], arr[high] = arr[high], arr[i + 1]
         return i + 1

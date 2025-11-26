@@ -1,6 +1,6 @@
 import typer
 from src.app_errors import AppError
-from src.read_list import parse_sort
+from src.parsing import parse_sort
 from src.sortings.bubble import bubble_sort
 
 app = typer.Typer()
@@ -14,8 +14,6 @@ def interactive_session():
     while (user_input:=typer.prompt("Введите команду")).lower() != "quit":
         
         text = user_input.split(maxsplit=1)
-        if len(text) < 2:
-            raise AppError('Недостаточно аргументов')
         command = text[0].lower()
         
         try:
@@ -24,11 +22,11 @@ def interactive_session():
             elif command == 'info':
                 typer.echo("This is an example of an interactive loop with Typer.")
             elif command == 'bubble_sort':
-                bubble_sort(parse_sort(text[1]))
+                print(bubble_sort(*parse_sort(user_input)))
             else:
-                typer.echo(f"Unknown command: '{command}'")
+                typer.echo(f"Команда не найдена: '{command}'")
         except Exception as e:
-            print(f'Error: {e}')
+            print(f'Ошибка: {e}')
 
 if __name__ == "__main__":
     app()

@@ -2,9 +2,9 @@ import re
 
 LIST_RE = re.compile(
     r'''                      
-    "(?:.|[^\"])*"
-    |'(?:.|[^\'])*'
-    |[^,"'\s]+
+    (?:\"[^\"]*\")
+    |(?:\'[^\']*\')
+    |(?:[^,\"\'\s]+)
     ''',
     re.VERBOSE,
 )
@@ -14,7 +14,8 @@ SORT_RE = re.compile(
     \s*(?P<list>\[.*\])\s*
     (?:key=(?P<key>[^\s]+))?\s*
     (?:cmp=(?P<cmp>[^\s]+))?\s*
-    (?:base=(?P<base>[^\s]+))?
+    (?:base=(?P<base>[^\s]+))?\s*
+    (?:buckets=(?P<buckets>[\d]+))?
     ''',
     re.VERBOSE,
 )
@@ -58,7 +59,7 @@ def odd_first(x, y):
         return -1 if x % 2 == 1 else 1
 
 cmps_dict = {
-    'decreasing': lambda x, y: (y > x) - (y < x),
+    'descending': lambda x, y: (y > x) - (y < x),
     'length_then_alpha': length_then_alpha,
     'even_first': even_first,
     'odd_first': odd_first,

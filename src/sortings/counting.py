@@ -12,15 +12,15 @@ def count_sort(arr: list[T], key: Callable[[T], Any] | None = None) -> list[T]:
         if key is not None:
             try:
                 key_value = key(arr_value)
-            except Exception as e:
-                raise AppError(f"Нельзя применить ключ к элементу {arr_value}: {e}")
+            except Exception:
+                raise AppError(f"Нельзя применить ключ к элементу {"'" + arr_value + "'" if type(arr_value) is str else arr_value}")
         else:
             key_value = arr_value
         pairs.append((arr_value, key_value))
 
     for arr_value, key_value in pairs:
         if not isinstance(key_value, int):
-            raise AppError(f"Сортировка счетом работает только с целыми числами, вы ввели: {key_value}")
+            raise AppError(f"Сортировка счетом работает только с целыми числами, вы ввели: {"'" + key_value + "'" if type(key_value) is str else key_value}")
 
     values = [key_value for _, key_value in pairs]
     min_val = min(values)

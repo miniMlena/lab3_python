@@ -4,7 +4,21 @@ from src.app_errors import AppError
 
 T = TypeVar('T')
 
-def parse_sort(text: str, sort_type: str) -> tuple[list[Any],
+def parse_int(text: str) -> int:
+    input = text.split(maxsplit=1)
+    if len(input) < 2:
+        raise AppError('Вы не ввели числовой аргумент')
+    text = input[1]
+    try:
+        print(int(text.strip()))
+        num = int(text.strip())
+    except Exception:
+        raise AppError(f'Эта функция принимает целые неторицательные числа, вы ввели: {text.strip()}')
+    if num < 0:
+        raise AppError(f'Эта функция принимает целые неторицательные числа, вы ввели: {text.strip()}')
+    return num
+
+def parse_sort(text: str, sort_type: str | None = None) -> tuple[list[Any],
     Callable[[Any], Any] | None, Callable[[T, T], int] | None]:
     """
     
@@ -33,22 +47,41 @@ def parse_sort(text: str, sort_type: str) -> tuple[list[Any],
     cmp = None
     parsed_cmp = match.group('cmp')
     if parsed_cmp:
+        if sort_type not in ('bubble', 'quick', 'heap'):
+            raise AppError('Эта сортировка не поддерживает компараторы')
         if parsed_cmp not in cmps_dict:
             raise AppError(f'Введенный компаратор не найден: {parsed_cmp}')
         else:
             cmp = cmps_dict[parsed_cmp]
 
-    if sort_type == 'rad_int':
-        parsed_base = match.group('base')
-        if parsed_base:
-            try: 
-                base = int(parsed_base)
-            except ValueError:
-                raise AppError(f'Основание системы счисления должно быть целым числом, вы ввели: {parsed_base}')
-            return list, key, base
+    parsed_base = match.group('base')
+    if parsed_base:
+        if sort_type != 'rad_int':
+            raise AppError('Эта сортировка не поддерживает параметр base')
+        try:
+            base = int(parsed_base)
+        except Exception:
+            raise AppError(f'Основание системы счисления должно быть целым числом, вы ввели: {parsed_base}') 
+        if base <= 1:
+            raise AppError("Основание системы счисления должно быть больше 1")
+        return list, key, base
 
+    parsed_buckets = match.group('buckets')
+    if parsed_buckets:
+        if sort_type != 'bucket':
+            raise AppError("Эта сортировка не поддерживает параметр buckets")
+        try:
+            buckets = int(parsed_buckets)
+        except Exception:
+            raise AppError("Параметр buckets должен быть целым положительным числом")
+        if buckets < 1:
+            raise AppError("Параметр buckets должен быть целым положительным числом")
+        return list, key, buckets
 
-    return list, key, cmp
+    if sort_type in ('count', 'rad_int' 'rad_str', 'bucket'):
+        return list, key
+    else:
+        return list, key, cmp
 
 
 def read_list(parsed_list):
@@ -78,7 +111,7 @@ def read_list(parsed_list):
                 result.append(float(item))
             except ValueError:
                 result.append(item)
-    
+
     return result
 
 '''from src.sortings.bubble import bubble_sort
@@ -86,3 +119,7 @@ from src.sortings.quick import quick_sort
 text = input()
 print(quick_sort(*parse_sort(text)))
 print(bubble_sort(*parse_sort(text)))'''
+
+'''from src.sortings.radix_str import radix_sort_str
+text="radix_sort_str ['abc', \"zxc\", 'hg', 1.5, \"\", \"33.3\" 'ab']"
+print(radix_sort_str(*parse_sort(text, 'rad_str')))'''

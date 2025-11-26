@@ -1,7 +1,5 @@
-from typing import TypeVar, Callable, Any
+from typing import Callable, Any
 from src.app_errors import AppError
-
-T = TypeVar('T')
 
 def radix_sort_int(arr: list[Any], key: Callable[[Any], Any] | None = None, base: int = 10) -> list[Any]:
     """
@@ -14,9 +12,6 @@ def radix_sort_int(arr: list[Any], key: Callable[[Any], Any] | None = None, base
     if not arr:
         return arr
     
-    if base <= 1:
-        raise AppError("Основание системы счисления должно быть больше 1")
-    
     # Создаем пары (элемент, значение_для_сортировки)
     pairs = []
     for a in arr:
@@ -24,14 +19,14 @@ def radix_sort_int(arr: list[Any], key: Callable[[Any], Any] | None = None, base
             try:
                 sort_value = key(a)
             except Exception:
-                raise AppError(f"Нельзя применить указанный ключ к элементу: {a}")
+                raise AppError(f"Нельзя применить указанный ключ к элементу: {"'" + a + "'" if type(a) is str else a}")
         else:
             sort_value = a
         pairs.append((a, sort_value))
 
     for arr_val, key_val in pairs:
         if not (isinstance(key_val, int) and key_val >= 0):
-            raise AppError(f"Поразрядная сортировка radix_int работает только с целыми неотрицаительыми числами, вы ввели: {key_val}")
+            raise AppError(f"Поразрядная сортировка radix_sort_int работает только с целыми неотрицаительыми числами, вы ввели: {"'" + key_val + "'" if type(key_val) is str else key_val}")
 
     max_digits = max([len(str(key_val)) for arr_val, key_val in pairs])
 
@@ -54,4 +49,4 @@ def radix_sort_int(arr: list[Any], key: Callable[[Any], Any] | None = None, base
     
     return arr
 
-#print(radix_sort_int([101, 23, 56, 2, 0, 90], key=lambda x: x%5))
+#print(radix_sort_int([1, 40, 22, 5], None))

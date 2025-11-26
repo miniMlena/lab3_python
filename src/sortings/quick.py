@@ -31,7 +31,7 @@ cmp: Callable[[T, T], int] | None = None) -> list[Any]:
                     i += 1
                     arr[i], arr[j] = arr[j], arr[i]
             except Exception:
-                raise AppError(f'Нельзя сравнить элементы по указанным правилам: {arr[j]} и {pivot}')
+                raise AppError(f'Нельзя сравнить элементы по указанным правилам: {arr[j]} и {pivot}. Ошибка в ключе или компараторе')
         
         arr[i + 1], arr[high] = arr[high], arr[i + 1]
         return i + 1

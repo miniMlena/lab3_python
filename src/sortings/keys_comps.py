@@ -3,7 +3,7 @@ from typing import TypeVar, Any, Callable
 T = TypeVar('T')
 
 def build_compare(key: Callable[[T], Any] | None = None, 
-                     cmp: Callable[[T, T], int] | None = None) -> Callable[[T, T], int]:
+                  cmp: Callable[[T, T], int] | None = None) -> Callable[[T, T], int]:
     """
     Создает функцию сравнения с учетом ключа и компаратора для функций сортировки
     :param key: Ключ для сортироовки

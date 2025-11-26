@@ -24,7 +24,7 @@ cmp: Callable[[T, T], int] | None = None) -> list[Any]:
                     arr[j], arr[j + 1] = arr[j + 1], arr[j]
                     swapped = True
             except Exception:
-                raise AppError(f'Нельзя сравнить элементы по указанным правилам: {arr[j]} и {arr[j + 1]}')
+                raise AppError(f'Нельзя сравнить элементы по указанным правилам: {arr[j]} и {arr[j + 1]}. Ошибка в ключе или компараторе')
         if not swapped:
             break
 

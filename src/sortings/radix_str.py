@@ -1,7 +1,5 @@
-from typing import TypeVar, Callable, Any
+from typing import Callable, Any
 from src.app_errors import AppError
-
-T = TypeVar('T')
 
 def radix_sort_str(arr: list[Any], key: Callable[[Any], Any] | None = None) -> list[Any]:
     """
@@ -17,14 +15,17 @@ def radix_sort_str(arr: list[Any], key: Callable[[Any], Any] | None = None) -> l
     pairs = []
     for a in arr:
         if key is not None:
-            sort_value = key(a)
+            try:
+                sort_value = key(a)
+            except Exception:
+                raise AppError(f"Нельзя применить указанный ключ к элементу: {"'" + a + "'" if type(a) is str else a}")
         else:
             sort_value = a
         pairs.append((a, sort_value))
 
     for arr_val, key_val in pairs:
         if not isinstance(key_val, str):
-            raise AppError(f"Поразрядная сортировка radix_str работает только со строками, вы ввели: {key_val}")
+            raise AppError(f"Поразрядная сортировка radix_sort_str работает только со строками, вы ввели: {key_val}")
 
     max_length = max(len(key_val) for _, key_val in pairs) if pairs else 0
 

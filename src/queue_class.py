@@ -1,5 +1,7 @@
+from typing import Any
+
 class Node:
-    def __init__(self, value: int, next_node=None):
+    def __init__(self, value: Any, next_node=None):
         self.value = value
         self.next = next_node
 
@@ -9,7 +11,7 @@ class Queue:
         self.tail = None
         self.size = 0
     
-    def enqueue(self, x: int) -> None:
+    def enqueue(self, x: Any) -> None:
         """
         Добавляет элемент в конец очереди
         """
@@ -22,7 +24,7 @@ class Queue:
             self.tail = new_node
         self.size += 1
     
-    def dequeue(self) -> int:
+    def dequeue(self) -> Any:
         """
         Удаляет и возвращает элемент из начала очереди
         """
@@ -38,7 +40,7 @@ class Queue:
         
         return value
     
-    def front(self) -> int:
+    def front(self) -> Any:
         """
         Возвращает элемент из начала очереди без удаления
         """
@@ -58,12 +60,3 @@ class Queue:
         Возвращает количество элементов в очереди
         """
         return self.size
-    
-    def __str__(self) -> str:
-        """Строковое представление очереди (для отладки)."""
-        elements = []
-        current = self.head
-        while current:
-            elements.append(str(current.value))
-            current = current.next
-        return " -> ".join(elements) if elements else "Empty queue"

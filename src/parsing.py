@@ -87,6 +87,9 @@ def parse_sort(text: str, sort_type: str | None = None) -> tuple[list[Any],
 def read_list(parsed_list):
     parsed_list = parsed_list.strip()
 
+    if not parsed_list.startswith('[') or not parsed_list.endswith(']'):
+        raise AppError('Некорректный ввод списка')
+    
     content = parsed_list[1:-1].strip()
     
     if not content:

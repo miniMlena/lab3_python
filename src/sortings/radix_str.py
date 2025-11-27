@@ -6,8 +6,7 @@ def radix_sort_str(arr: list[Any], key: Callable[[Any], Any] | None = None) -> l
     Поразрядная сортировка строк (поддерживает только символы ASCII)
     :param arr: Список, который нужно отсортировать
     :param key: Ключ, по которому будет происходить сортировка
-    :param base: Основание системы счисления
-    :return: Возвращает отсортированный список
+    :return: Отсортированный список
     """
     if not arr:
         return arr

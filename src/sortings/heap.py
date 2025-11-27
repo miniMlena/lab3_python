@@ -5,9 +5,13 @@ from src.app_errors import AppError
 T = TypeVar('T')
 
 def heap_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
-                      cmp: Callable[[T, T], int] | None = None) -> list[Any]:
+              cmp: Callable[[T, T], int] | None = None) -> list[Any]:
     """
-    
+    Сортировка кучей
+    :param arr: Список, который нужно отсортировать
+    :param key: Ключ, по которому будет происходить сортировка
+    :param cmp: Компаратор, котрый будет использован при сортировке
+    :return: Отсортированный список
     """
     if not arr:
         return arr
@@ -15,8 +19,14 @@ def heap_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
     compare = build_compare(key, cmp)
     n = len(arr)
     
-    def heapify(n: int, i: int):
-        """Просеивание элемента вниз"""
+    def heapify(n: int, i: int) -> None:
+        """
+        Вспомогательная функция для восстановленря структуры кучи.
+        Выбранный элемента сравнивается со своими потомками и, если нужно, перемещается вниз
+        :param n: Количество элементов в куче
+        :param i: Индекс элемента, с которого начнётся сравнение
+        :return: Эта функция ничего не возвращает
+        """
         max_index = i
         left = 2 * i + 1
         right = 2 * i + 2

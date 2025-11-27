@@ -1,27 +1,17 @@
 from typing import TypeVar, Callable, Any
-from src.constants import LIST_RE, SORT_RE, keys_dict, cmps_dict
 from src.app_errors import AppError
+from src.constants import SORT_RE, KEYS_DICT, CMPS_DICT
+from src.read_list import read_list
 
 T = TypeVar('T')
 
-def parse_int(text: str) -> int:
-    input = text.split(maxsplit=1)
-    if len(input) < 2:
-        raise AppError('Вы не ввели числовой аргумент')
-    text = input[1]
-    try:
-        print(int(text.strip()))
-        num = int(text.strip())
-    except Exception:
-        raise AppError(f'Эта функция принимает целые неторицательные числа, вы ввели: {text.strip()}')
-    if num < 0:
-        raise AppError(f'Эта функция принимает целые неторицательные числа, вы ввели: {text.strip()}')
-    return num
-
 def parse_sort(text: str, sort_type: str | None = None) -> tuple[list[Any],
-    Callable[[Any], Any] | None, Callable[[T, T], int] | None]:
+               Callable[[Any], Any] | None, Callable[[T, T], int] | None]:
     """
-    
+    Выделение списка и параметров из строки, введенной пользователем
+    :param text: Строка, введенная пользователем
+    :param sort_type: Тип сортировки
+    :return: Кортеж, содержащий список и все параметры для сортировки
     """
     input = text.split(maxsplit=1)
     if len(input) < 2:
@@ -39,20 +29,20 @@ def parse_sort(text: str, sort_type: str | None = None) -> tuple[list[Any],
     key = None
     parsed_key = match.group('key')
     if parsed_key:
-        if parsed_key not in keys_dict:
+        if parsed_key not in KEYS_DICT:
             raise AppError(f'Введенный ключ не найден: {parsed_key}')
         else:
-            key = keys_dict[parsed_key]
+            key = KEYS_DICT[parsed_key]
 
     cmp = None
     parsed_cmp = match.group('cmp')
     if parsed_cmp:
         if sort_type not in ('bubble', 'quick', 'heap'):
             raise AppError('Эта сортировка не поддерживает компараторы')
-        if parsed_cmp not in cmps_dict:
+        if parsed_cmp not in CMPS_DICT:
             raise AppError(f'Введенный компаратор не найден: {parsed_cmp}')
         else:
-            cmp = cmps_dict[parsed_cmp]
+            cmp = CMPS_DICT[parsed_cmp]
 
     parsed_base = match.group('base')
     if parsed_base:
@@ -80,49 +70,5 @@ def parse_sort(text: str, sort_type: str | None = None) -> tuple[list[Any],
 
     if sort_type in ('count', 'rad_int' 'rad_str', 'bucket'):
         return list, key
-    else:
+    elif sort_type in ('bubble', 'quick', 'heap'):
         return list, key, cmp
-
-
-def read_list(parsed_list):
-    parsed_list = parsed_list.strip()
-
-    if not parsed_list.startswith('[') or not parsed_list.endswith(']'):
-        raise AppError('Некорректный ввод списка')
-    
-    content = parsed_list[1:-1].strip()
-    
-    if not content:
-        return []
-    
-    items = LIST_RE.findall(content)
-    result = []
-    
-    for item in items:
-        item = item.strip()
-        if not item:
-            continue
-
-        if item.startswith('"') and item.endswith('"'):
-            result.append(item[1:-1])
-        elif item.startswith("'") and item.endswith("'"):
-            result.append(item[1:-1])
-        elif item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
-            result.append(int(item))
-        else:
-            try:
-                result.append(float(item))
-            except ValueError:
-                result.append(item)
-
-    return result
-
-'''from src.sortings.bubble import bubble_sort
-from src.sortings.quick import quick_sort
-text = input()
-print(quick_sort(*parse_sort(text)))
-print(bubble_sort(*parse_sort(text)))'''
-
-'''from src.sortings.radix_str import radix_sort_str
-text="radix_sort_str ['abc', \"zxc\", 'hg', 1.5, \"\", \"33.3\" 'ab']"
-print(radix_sort_str(*parse_sort(text, 'rad_str')))'''

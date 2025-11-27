@@ -5,7 +5,7 @@ from src.app_errors import AppError
 T = TypeVar('T')
 
 def quick_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
-cmp: Callable[[T, T], int] | None = None) -> list[Any]:
+               cmp: Callable[[T, T], int] | None = None) -> list[Any]:
     """
     Быстрая сортировка
     :param arr: Список, который нужно отсортировать
@@ -14,12 +14,6 @@ cmp: Callable[[T, T], int] | None = None) -> list[Any]:
     :return: Возвращает отсортированный список
     """
     compare = build_compare(key, cmp)
-    
-    def _quicksort(low, high):
-        if low < high:
-            pi = partition(low, high)
-            _quicksort(low, pi - 1)
-            _quicksort(pi + 1, high)
     
     def partition(low, high):
         pivot = arr[high]
@@ -36,9 +30,12 @@ cmp: Callable[[T, T], int] | None = None) -> list[Any]:
         arr[i + 1], arr[high] = arr[high], arr[i + 1]
         return i + 1
     
+    def _quicksort(low, high):
+        if low < high:
+            pi = partition(low, high)
+            _quicksort(low, pi - 1)
+            _quicksort(pi + 1, high)
+
     _quicksort(0, len(arr) - 1)
 
     return arr
-
-"""a = [1, 58, 34, 102]
-print(quick_sort(a))"""

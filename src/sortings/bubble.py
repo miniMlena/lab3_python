@@ -5,7 +5,7 @@ from src.app_errors import AppError
 T = TypeVar('T')
 
 def bubble_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
-cmp: Callable[[T, T], int] | None = None) -> list[Any]:
+                cmp: Callable[[T, T], int] | None = None) -> list[Any]:
     """
     Сортировка пузырьком
     :param arr: Список, который нужно отсортировать

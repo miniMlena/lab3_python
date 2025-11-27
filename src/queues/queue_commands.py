@@ -1,11 +1,15 @@
-from src.queue_class import Queue
+from src.queues.queue_class import Queue
 from src.app_errors import AppError
-from src.parsing import read_list
+from src.read_list import read_list
 
 queues = {}
 
-def create_queue(text):
-    """Создает новую очередь"""
+def create_queue(text: str) -> None:
+    """
+    Создает новую очередь
+    :param text: Строка, введенная пользователем
+    :return: Данная функция ничего не возвращает
+    """
     parts = text.split(maxsplit=2)
     
     if len(parts) < 2:
@@ -26,8 +30,12 @@ def create_queue(text):
     
     print(f"Очередь {queue_name} создана")
 
-def show_queue(text):
-    """Показывает очередь или все очереди"""
+def show_queue(text: str) -> None:
+    """
+    Показывает очередь или все очереди
+    :param text: Строка, введенная пользователем
+    :return: Данная функция ничего не возвращает
+    """
     parts = text.split(maxsplit=1)
     arg = None
     if len(parts) > 1:
@@ -50,8 +58,12 @@ def show_queue(text):
             raise AppError(f"Очередь не найдена: {queue_name}")
         print(f"Очередь {queue_name}: {format_queue(queues[queue_name])}")
 
-def delete_queue(text):
-    """Удаляет очередь"""
+def delete_queue(text: str) -> None:
+    """
+    Удаляет очередь
+    :param text: Строка, введенная пользователем
+    :return: Данная функция ничего не возвращает
+    """
     parts = text.split(maxsplit=1)
     arg = None
     if len(parts) > 1:
@@ -67,8 +79,14 @@ def delete_queue(text):
     del queues[queue_name]
     print(f"Очередь {queue_name} удалена")
 
-def queue_operation(queue_name, operation, text):
-    """Выполняет операцию над очередью"""
+def queue_operation(queue_name: str, operation: str, text: str) -> None:
+    """
+    Выполняет операцию над очередью
+    :param queue_name: Название очереди
+    :param operation: Название операции
+    :param text: Строка, введенная пользователем
+    :return: Данная функция ничего не возвращает
+    """
     parts = text.split(maxsplit=2)
     if len(parts) > 2:
         arg = parts[2].strip()
@@ -116,39 +134,15 @@ def queue_operation(queue_name, operation, text):
     else:
         print(f"Операция не найдена: {operation}")
 
-
-
-def format_queue(queue) -> str:
-    """Форматирует очередь для красивого вывода"""
+def format_queue(queue: Queue) -> str:
+    """
+    Форматирует очередь для вывода
+    :param queue: Очередь, которую нужно подготовить для вывода
+    :return: Отформотированная строка
+    """
     elements = []
     current = queue.head
     while current:
         elements.append(str(current.value))
         current = current.next
     return "[" + " -> ".join(elements) + "]" if elements else "[]"
-
-def show_help():
-    """Показывает справку по командам"""
-    print("""
-Available commands:
-  
-  CREATE:
-    create <name>                   - создать пустую очередь
-    create <name> [1, 2, 3]         - создать очередь с элементами
-
-  OPERATIONS:
-    <queue_name> add <value>        - добавить элемент
-    <queue_name> remove             - удалить первый элемент
-    <queue_name> front              - посмотреть первый элемент
-    <queue_name> size               - получить размер
-    <queue_name> is_empty           - проверить пустоту
-
-  VIEW:
-    show <queue_name>               - показать очередь
-    show all                        - показать все очереди
-
-  OTHER:
-    delete <queue_name>             - удалить очередь
-    help                            - показать эту справку
-    exit/quit                       - выйти
-""")

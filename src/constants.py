@@ -1,6 +1,7 @@
 import re
+from typing import Dict, Callable, Pattern
 
-LIST_RE = re.compile(
+LIST_RE: Pattern = re.compile(
     r'''                      
     (?:\"[^\"]*\")
     |(?:\'[^\']*\')
@@ -9,7 +10,7 @@ LIST_RE = re.compile(
     re.VERBOSE,
 )
 
-SORT_RE = re.compile(
+SORT_RE: Pattern = re.compile(
     r'''
     \s*(?P<list>\[.*\])\s*
     (?:key=(?P<key>[^\s]+))?\s*
@@ -20,17 +21,7 @@ SORT_RE = re.compile(
     re.VERBOSE,
 )
 
-'''com = '[1, 2, \'a,bc\']    key=BEST_KEY1'
-print(SORT_RE.findall(com))
-mat = SORT_RE.match(com)
-print(mat.group('list'))
-print(mat.group('key'))
-print(mat.group('cmp'))'''
-
-"""text = 'ф1, 2, 3, "ab c"'
-print(re.findall(LIST_RE, text))"""
-
-keys_dict = {
+KEYS_DICT: Dict[str, Callable] = {
     'abs': lambda x: abs(x),
     'len': lambda x: len(x),
     'case_insensitive': lambda x: x.lower,
@@ -58,7 +49,7 @@ def odd_first(x, y):
     else:
         return -1 if x % 2 == 1 else 1
 
-cmps_dict = {
+CMPS_DICT: Dict[str, Callable] = {
     'descending': lambda x, y: (y > x) - (y < x),
     'length_then_alpha': length_then_alpha,
     'even_first': even_first,

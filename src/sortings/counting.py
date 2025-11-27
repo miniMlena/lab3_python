@@ -1,9 +1,13 @@
-from typing import TypeVar, Callable, Any
+from typing import Callable, Any
 from src.app_errors import AppError
 
-T = TypeVar('T')
-
-def count_sort(arr: list[T], key: Callable[[T], Any] | None = None) -> list[T]:
+def count_sort(arr: list[Any], key: Callable[[Any], int] | None = None) -> list[Any]:
+    """
+    Сортировка счётом
+    :param arr: Список, который нужно отсортировать
+    :param key: Ключ, по которому будет происходить сортировка
+    :return: Отсортированный список
+    """
     if not arr:
         return arr
 

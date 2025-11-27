@@ -1,11 +1,16 @@
-from typing import TypeVar, Callable, Any
+from typing import Callable, Any
 from src.app_errors import AppError
 from src.sortings.quick import quick_sort
 
-T = TypeVar('T')
-
-def bucket_sort(arr: list[T], key: Callable[[T], Any] | None = None,
-                buckets: int | None = None) -> list[T]:
+def bucket_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
+                buckets: int | None = None) -> list[Any]:
+    """
+    Карманная (корзинная, блочная) сортировка
+    :param arr: Список, который нужно отсортировать
+    :param key: Ключ, по которому будет происходить сортировка
+    :param buckets: Количество корзин, по которым будут раскладываться элементы
+    :return: Отсортированный список
+    """
     if not arr:
         return arr
 
@@ -36,7 +41,6 @@ def bucket_sort(arr: list[T], key: Callable[[T], Any] | None = None,
         # Нормализуем значение от 0 до 1
         normalized = (values[i] - min_val) / (max_val - min_val)
         bucket_index = int(normalized * (buckets - 1))
-        bucket_index = max(0, min(bucket_index, buckets - 1))
         buckets_list[bucket_index].append(arr[i])
     
     result = []

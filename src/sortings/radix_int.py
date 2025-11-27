@@ -7,7 +7,7 @@ def radix_sort_int(arr: list[Any], key: Callable[[Any], Any] | None = None, base
     :param arr: Список, который нужно отсортировать
     :param key: Ключ, по которому будет происходить сортировка
     :param base: Основание системы счисления
-    :return: Возвращает отсортированный список
+    :return: Отсортированный список
     """
     if not arr:
         return arr

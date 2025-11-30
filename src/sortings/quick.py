@@ -16,6 +16,8 @@ def quick_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
     compare = build_compare(key, cmp)
     
     def partition(low, high):
+        mid = (low + high) // 2
+        arr[mid], arr[high] = arr[high], arr[mid]
         pivot = arr[high]
         i = low - 1
         

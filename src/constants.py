@@ -12,11 +12,65 @@ LIST_RE: Pattern = re.compile(
 
 SORT_RE: Pattern = re.compile(
     r'''
-    \s*(?P<list>\[.*\])\s*
+    \s*(?P<list>\[.*\]
+    |rand_int_array\s+[-]?\d+\s+[-]?\d+\s+[-]?\d+
+    |nearly_sorted\s+[-]?\d+\s+[-]?\d+
+    |many_duplicates\s+[-]?\d+\s+[-]?\d+
+    |reverse_sorted\s+[-]?\d+
+    |rand_float_array\s+[-]?\d+\s+[-]?\d+(?:\.\d+)?\s+[-]?\d+(?:\.\d+)?
+    )?\s*
     (?:key=(?P<key>[^\s]+))?\s*
     (?:cmp=(?P<cmp>[^\s]+))?\s*
     (?:base=(?P<base>[^\s]+))?\s*
     (?:buckets=(?P<buckets>[\d]+))?
+    ''',
+    re.VERBOSE,
+)
+
+LIST_SORT_RE: Pattern = re.compile(
+    r'''
+    \s*(
+    \[[^\[\]]*\]
+    |rand_int_array\s+[-]?\d+\s+[-]?\d+\s+[-]?\d+
+    |nearly_sorted\s+[-]?\d+\s+[-]?\d+
+    |many_duplicates\s+[-]?\d+\s+[-]?\d+
+    |reverse_sorted\s+[-]?\d+
+    |rand_float_array\s+[-]?\d+\s+[-]?\d+(?:\.\d+)?\s+[-]?\d+(?:\.\d+)?
+
+    |rand_int_array\s+[^keycmpbasebuckets=]*
+    |nearly_sorted\s+[^keycmpbasebuckets=]*
+    |many_duplicates\s+[^keycmpbasebuckets=]*
+    |reverse_sorted\s+[^keycmpbasebuckets=]*
+    |rand_float_array\s+[^keycmpbasebuckets=]*
+    )
+    ''',
+    re.VERBOSE,
+)
+
+KEY_RE: Pattern =  re.compile(
+    r'''
+    key=([^\s]+)
+    ''',
+    re.VERBOSE,
+)
+
+CMP_RE: Pattern = re.compile(
+    r'''
+    cmp=([^\s]+)
+    ''',
+    re.VERBOSE,
+)
+
+BASE_RE: Pattern = re.compile(
+    r'''
+    base=([^\s]+)
+    ''',
+    re.VERBOSE,
+)
+
+BUCKETS_RE: Pattern = re.compile(
+    r'''
+    buckets=([\d]+)
     ''',
     re.VERBOSE,
 )

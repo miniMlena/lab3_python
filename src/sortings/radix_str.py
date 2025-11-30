@@ -49,7 +49,3 @@ def radix_sort_str(arr: list[Any], key: Callable[[Any], Any] | None = None) -> l
             bin_list.clear()
 
     return [arr_val for arr_val, _ in pairs]
-
-
-"""print(sorted(text, key=str.lower))
-print(radix_sort_str(text, key=keys_dict['len']))"""

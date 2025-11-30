@@ -41,19 +41,19 @@ def main() -> None:
                 print(fibo_recursive(parse_int(user_input)))
             # Сортировки
             elif command == 'bubble_sort':
-                print(bubble_sort(*parse_sort(user_input, 'bubble')))
+                print(bubble_sort(*parse_sort(user_input)))
             elif command == 'quick_sort':
-                print(quick_sort(*parse_sort(user_input, 'quick')))
+                print(quick_sort(*parse_sort(user_input)))
             elif command == 'counting_sort':
-                print(count_sort(*parse_sort(user_input, 'count')))
+                print(count_sort(*parse_sort(user_input)))
             elif command == 'radix_sort_int':
-                print(radix_sort_int(*parse_sort(user_input, 'rad_int')))
+                print(radix_sort_int(*parse_sort(user_input)))
             elif command == 'radix_sort_str':
-                print(radix_sort_str(*parse_sort(user_input, 'rad_str')))
+                print(radix_sort_str(*parse_sort(user_input)))
             elif command == 'bucket_sort':
-                print(bucket_sort(*parse_sort(user_input, 'bucket')))
+                print(bucket_sort(*parse_sort(user_input)))
             elif command == 'heap_sort':
-                print(heap_sort(*parse_sort(user_input, 'heap')))
+                print(heap_sort(*parse_sort(user_input)))
             # Очереди
             elif command == "create":
                 create_queue(user_input)

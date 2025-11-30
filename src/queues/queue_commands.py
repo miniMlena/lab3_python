@@ -1,6 +1,7 @@
 from src.queues.queue_class import Queue
 from src.app_errors import AppError
 from src.read_list import read_list
+from src.generators import generate_list
 
 queues = {}
 
@@ -18,15 +19,22 @@ def create_queue(text: str) -> None:
     queue_name = parts[1]
     if queue_name in queues:
         raise AppError(f"Очередь {queue_name} уже существует")
-    
-    queues[queue_name] = Queue()
 
     if len(parts) > 2:
         list = parts[2].strip()
-        elements = read_list(list)
+        if list.startswith('['):
+            elements = read_list(list)
+        else:
+            try:
+                elements = generate_list(list)
+            except Exception:
+                raise AppError("Некорректный ввод списка элементов или генератора списка")
         
+        queues[queue_name] = Queue()
         for elem in elements:
             queues[queue_name].enqueue(elem)
+    else:
+        queues[queue_name] = Queue()
     
     print(f"Очередь {queue_name} создана")
 

@@ -7,7 +7,6 @@ from src.sortings.radix_int import radix_sort_int
 from src.sortings.buckets import bucket_sort
 from src.sortings.heap import heap_sort
 
-@pytest.mark.benchmark(group="sorting")
 def benchmark_sort(benchmark, sort_func, base_arr):
     def run():
         arr = base_arr.copy()

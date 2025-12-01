@@ -36,7 +36,6 @@ def test_upper_limit_raises():
     with pytest.raises(AppError):
         fibo_recursive(1901)
 
-@pytest.mark.benchmark(group="fibo_fact")
 def benchmark_func(benchmark, func, n):
     result = benchmark(func, n)
     assert result is not None and isinstance(result, int)

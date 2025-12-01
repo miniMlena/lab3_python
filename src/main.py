@@ -1,4 +1,7 @@
 from src.info import info
+from src.benchmarks.benchmark_factorial import benchmark_factorial
+from src.benchmarks.benchmark_fibonacci import benchmark_fibonacci
+from src.benchmarks.benchmark_sort import benchmark_sorts
 from src.sortings.parse_sort import parse_sort
 from src.fibo_fact.parse_int import parse_int
 from src.fibo_fact.factorial import factorial_iter, factorial_recursive
@@ -30,6 +33,11 @@ def main() -> None:
         try:
             if command == 'info':
                 info()
+            elif command == 'benchmark':
+                print("* Время представлено в секундах")
+                benchmark_factorial()
+                benchmark_fibonacci()
+                benchmark_sorts()
             # Факториал и Фибоначчи
             elif command == 'factorial_iter':
                 print(factorial_iter(parse_int(user_input)))

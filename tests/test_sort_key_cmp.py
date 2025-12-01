@@ -1,6 +1,5 @@
 import pytest
 from src.constants import KEYS_DICT, CMPS_DICT
-from src.generators import rand_int_array
 from src.sortings.bubble import bubble_sort
 from src.sortings.quick import quick_sort
 from src.sortings.counting import count_sort

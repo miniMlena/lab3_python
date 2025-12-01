@@ -78,7 +78,7 @@ BUCKETS_RE: Pattern = re.compile(
 KEYS_DICT: Dict[str, Callable] = {
     'abs': lambda x: abs(x),
     'len': lambda x: len(x),
-    'case_insensitive': lambda x: x.lower,
+    'case_insensitive': str.lower,
     'as_strings': lambda x: str(x),
     
     }

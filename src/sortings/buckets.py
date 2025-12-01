@@ -1,6 +1,6 @@
 from typing import Callable, Any
 from src.app_errors import AppError
-from src.sortings.bubble import bubble_sort
+from src.sortings.quick import quick_sort
 
 def bucket_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
                 buckets: int | None = None) -> list[Any]:
@@ -46,7 +46,7 @@ def bucket_sort(arr: list[Any], key: Callable[[Any], Any] | None = None,
     result = []
     for bucket in buckets_list:
         if bucket:
-            sorted_bucket = bubble_sort(bucket, key=key)
+            sorted_bucket = quick_sort(bucket, key=key)
             result.extend(sorted_bucket)
     
     return result
